@@ -5,7 +5,7 @@ mongoose
   .catch(e => {
     console.error('Connection error', e.message);
   });
-
+const URL = "hi"; 
 const db = mongoose.connection;
 
 module.exports = db;
