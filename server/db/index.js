@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 mongoose
-  .connect('mongodb://127.0.0.1:27017/items', { useNewUrlParser: true, useFindAndModify: false })
+  .connect('mongodb+srv://default:cachemoney123@cluster0.0lql9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true,  useUnifiedTopology: true }) 
   .catch(e => {
     console.error('Connection error', e.message);
   });
-const URL = "hi"; 
+
 const db = mongoose.connection;
 
 module.exports = db;
