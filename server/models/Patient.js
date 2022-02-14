@@ -19,7 +19,7 @@ const Patient = new Schema(
         },
         Race: {
             type: String,
-            required: True
+            required: true
         },
         Zip_Code: {
             type: Number,
