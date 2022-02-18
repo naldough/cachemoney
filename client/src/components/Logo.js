@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import logo from '../styles/assets/logo.svg';
+import logo from '../styles/assets/logo.jpg';
 
 const Wrapper = styled.a.attrs({
   className: 'navbar-brand',
@@ -15,7 +15,7 @@ class Logo extends Component {
 
     return (
       <Wrapper>
-        {/* <img src={logo} className="app--logo" style={logoStyles} alt="React Logo" /> */}
+        <img src={logo} className="app--logo" style={logoStyles} alt="React Logo" />
       </Wrapper>
     );
   }

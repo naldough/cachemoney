@@ -88,20 +88,25 @@ class ItemsPlain extends Component {
   }
 
   fetchAllItems = () => {
-    api
-      .getAllItems()
-      .then(resp => {
-        const { items } = resp.data;
-        console.log('getAllItems: resp');
-        console.log(items);
-        this.setState({ items });
-      })
-      .catch(err => {
-        console.error(`ERROR in 'getAllItems': ${err}`);
-        console.error(err);
-        return err;
-      });
-  };
+    const items = [1, 2, 3, 4, 5, 6]
+    this.setState({ items });
+  }
+  
+  // fetchAllItems = () => {
+  //   api
+  //     .getAllItems()
+  //     .then(resp => {
+  //       const { items } = resp.data;
+  //       console.log('getAllItems: resp');
+  //       console.log(items);
+  //       this.setState({ items });
+  //     })
+  //     .catch(err => {
+  //       console.error(`ERROR in 'getAllItems': ${err}`);
+  //       console.error(err);
+  //       return err;
+  //     });
+  // };
 
   deleteSingleItem = itemId => {
     return api
