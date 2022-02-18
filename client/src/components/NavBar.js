@@ -7,28 +7,33 @@ const Container = styled.div.attrs({
   className: 'container',
 })`
   max-width: 100%;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 20px;
 `;
 
 const Nav = styled.nav.attrs({
-  className: 'navbar navbar-expand-lg navbar-dark bg-dark',
+  className: 'navbar navbar-expand-lg navbar-light bg-light',
 })`
-  margin-bottom: 20px;
+  margin-bottom: -40px;
+  padding-right: 20px;
 
   @media screen and (min-width: 992px) {
-    padding: 0.5em 25%;
+    // padding: 1em 4%;
   }
 `;
 
 const navBarItems = [
   {
-    name: 'Items',
+    name: 'Exam List',
     toPathname: '/items',
     className: 'nav-link',
   },
+  // {
+  //   name: 'Edit List',
+  //   toPathname: '/items/edit',
+  //   className: 'nav-link',
+  // },
   {
-    name: 'Create Item',
+    name: 'Create Exam',
     toPathname: '/item/create',
     className: 'nav-link',
   },

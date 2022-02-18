@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
-import Logo from './Logo';
+import '../styles/App.css';
 
 const HomeWrapper = styled.div``;
 
@@ -35,12 +34,12 @@ const Item = styled.div.attrs({
 `;
 
 const homeStyles = {
-  marginLeft: `1em`,
+  marginLeft: `5px`,
 };
 
 const logoStyles = {
-  height: '40px',
-  width: '40px',
+  height: '60px',
+  width: '60px',
 };
 
 class Links extends Component {
@@ -50,9 +49,8 @@ class Links extends Component {
     return (
       <React.Fragment>
         <HomeWrapper>
-          <Logo logoStyles={logoStyles} />
           <Link to="/" className="navbar-brand" style={homeStyles}>
-            Home
+            <h4>COVID-19 Reporting App</h4>
           </Link>
         </HomeWrapper>
         <Collapse>
