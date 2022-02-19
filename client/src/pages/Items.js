@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
+import '../styles/App.css';
 
 import { routes } from '../constants';
 
@@ -12,10 +13,11 @@ import { ItemsList, ItemsPlain, ItemsTable } from '../pages';
 const LinksGridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(10, 1fr [col-start]);
-  margin-bottom: 1em;
-  min-height: 30px;
-  padding: 1em;
-  width: 100%;
+  margin-bottom: -10px;
+  min-height: 10px;
+  padding: 50px;
+  width: 22%;
+  margin-left: -50px;
 `;
 
 const LinkGridWrapper = styled.div``;
@@ -25,25 +27,25 @@ const isCurrentPage = linkPathname => {
 };
 
 const linkTextColor = linkPathname => {
-  return isCurrentPage(linkPathname) ? '#FFFFFF' : 'rgba(255,255,255,.75)';
+  return isCurrentPage(linkPathname) ? 'white' : 'rgba(255,255,255,.75)';
 };
 
 const itemsPageVariants = [
   {
-    name: 'Items',
+    name: 'Exams',
     toPathname: routes.ITEMS,
     pageComonent: ItemsList,
   },
-  {
-    name: 'Items (using react-table-v6)',
-    toPathname: `${routes.ITEMS}/react-table-v6`,
-    pageComponent: ItemsTable,
-  },
-  {
-    name: 'Items (with only styled-components)',
-    toPathname: `${routes.ITEMS}/items-plain`,
-    pageComponent: ItemsPlain,
-  },
+  // {
+  //   name: 'Items (using react-table-v6)',
+  //   toPathname: `${routes.ITEMS}/react-table-v6`,
+  //   pageComponent: ItemsTable,
+  // },
+  // {
+  //   name: 'Items (with only styled-components)',
+  //   toPathname: `${routes.ITEMS}/items-plain`,
+  //   pageComponent: ItemsPlain,
+  // },
 ];
 
 class Items extends Component {
@@ -52,8 +54,8 @@ class Items extends Component {
     const itemsPages = (
       <Switch>
         <Route exact path={routes.ITEMS} component={ItemsList} />
-        <Route exact path={`${routes.ITEMS}/react-table-v6`} component={ItemsTable} />
-        <Route exact path={`${routes.ITEMS}/items-plain`} component={ItemsPlain} />
+        {/* <Route exact path={`${routes.ITEMS}/react-table-v6`} component={ItemsTable} /> */}
+        {/* <Route exact path={`${routes.ITEMS}/items-plain`} component={ItemsPlain} /> */}
       </Switch>
     );
 
@@ -64,7 +66,7 @@ class Items extends Component {
             <LinkGridWrapper
               key={itemsPageVariant.name}
               style={{ gridColumn: `${(i + 2) * 2 - 1} / span 2` }}>
-              <Button className="bg-dark" variant="contained">
+              <Button className="Button" className="bg-dark">
                 <Link
                   style={{ color: linkTextColor(itemsPageVariant.toPathname) }}
                   to={itemsPageVariant.toPathname}>
