@@ -13,14 +13,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-// const CONNECTION_URL="mongodb+srv://ohi:ohi2022@cluster0.m1nlq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-
-// mongoose.connect(CONNECTION_URL)
-//     .then(() => app.listen(apiPORT, () => console.log(`Server running on port: ${PORT}`)))
-//     .catch((error) => console.log(error.message))
-
-// mongoose.set('useFindAndModify', false);
-
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.get('/', (req, res) => {
