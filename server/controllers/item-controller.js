@@ -1,5 +1,9 @@
 /* eslint-disable no-undef, arrow-body-style */
-const Item = require('../models/item-model');
+//const Item = require('../models');
+
+const Exam = require("../models/Exam")
+
+const Patient = require("../models/Patient")
 
 getItems = async (req, res) => {
   await Item.find({}, (err, items) => {
@@ -192,3 +196,5 @@ module.exports = {
   updateItem,
   deleteItem,
 };
+
+

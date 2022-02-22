@@ -8,4 +8,8 @@ mongoose
 
 const db = mongoose.connection;
 
+mongoose.connection.on('connected', () => {
+  console.log("Mongoose is connected!!");
+});
+
 module.exports = db;
