@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "engines": {
-        "node": ">=10.14.2",
+        "node": ">=17.5.0",
         "npm": ">=6.4.1",
         "yarn": ">=1.22.5"
     },

@@ -4,8 +4,8 @@
     "version": "0.1.0",
     "private": true,
     "engines": {
-        "node": ">=10.14.2",
-        "npm": ">=6.4.1",
+        "node": ">=12.18.4",
+        "npm": ">=7.24.2",
         "yarn": ">=1.22.5"
     },
     "scripts": {
