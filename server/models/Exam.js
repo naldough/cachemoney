@@ -6,7 +6,7 @@ const Exam = new Schema(
         Exam_id: new Schema.Types.ObjectId,
         Patient_id: new Schema.Types.ObjectId,
         Image: {
-            type: File,
+            type: { data: Buffer, contentType: String },
             required: true
         },
         Key_findings: {

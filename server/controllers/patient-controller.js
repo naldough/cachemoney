@@ -1,29 +1,29 @@
 /* eslint-disable no-undef, arrow-body-style */
-const Item = require('../models/item-model');
+const patientItem = require('../models/Patient.js');
 
 getItems = async (req, res) => {
-  await Item.find({}, (err, items) => {
+  await patientItem.find({}, (err, items) => {
     if (err) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'getItems': ${err}`);
+      console.error(`400 in 'getItems': ${err}`);
       return res.status(400).json({
         success: false,
         error: err,
       });
     }
     if (!items.length) {
-      console.error(`[Hack.Diversity React Template] - 404 in 'getItems': Items not found`);
+      console.error(`404 in 'getItems': Items not found`);
       return res.status(200).json({
         success: true,
         items: [],
       });
     }
-    console.log(`[Hack.Diversity React Template] - 200 in 'getItems': Items fetched!`);
+    console.log(`200 in 'getItems': Items fetched!`);
     return res.status(200).json({
       success: true,
       items: items,
     });
   }).catch(err => {
-    console.error(`[Hack.Diversity React Template] - caught error in 'getItems': ${err}`);
+    console.error(`caught error in 'getItems': ${err}`);
     console.error(err);
     return res.status(404).json({
       success: false,
@@ -33,28 +33,28 @@ getItems = async (req, res) => {
 };
 
 getItemById = async (req, res) => {
-  await Item.find({ _id: req.params.id }, (err, items) => {
+  await  patientItem.find({ _id: req.params.id }, (err, items) => {
     if (err) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'getItemById': ${err}`);
+      console.error(`400 in 'getItemById': ${err}`);
       throw res.status(400).json({
         success: false,
         error: err,
       });
     }
     if (!items.length) {
-      console.error(`[Hack.Diversity React Template] - 404 in 'getItemById': Item not found`);
+      console.error(`404 in 'getItemById': Item not found`);
       return res.status(404).json({
         success: false,
         error: 'Item not found',
       });
     }
-    console.log(`[Hack.Diversity React Template] - 200 in 'getItemById': Item fetched!`);
+    console.log(`200 in 'getItemById': Item fetched!`);
     return res.status(200).json({
       success: true,
       item: items[0],
     });
   }).catch(err => {
-    console.error(`[Hack.Diversity React Template] - caught error in 'getItemById': ${err}`);
+    console.error(`caught error in 'getItemById': ${err}`);
     console.error(err);
     return err;
   });
@@ -74,10 +74,10 @@ createItem = (req, res) => {
     });
   }
 
-  const item = new Item(body);
+  const item = new patientItem(body);
 
   if (!item) {
-    console.error(`[Hack.Diversity React Template] - 400 in 'createItem': 'item' is malformed.`);
+    console.error(`400 in 'createItem': 'item' is malformed.`);
     return res.status(400).json({
       success: false,
       message: "'item' is malformed",
@@ -90,7 +90,7 @@ createItem = (req, res) => {
   return item
     .save()
     .then(() => {
-      console.error(`[Hack.Diversity React Template] - 201 in 'createItem': Item created!`);
+      console.error(`201 in 'createItem': Item created!`);
       return res.status(201).json({
         success: true,
         id: item._id,
@@ -98,11 +98,11 @@ createItem = (req, res) => {
       });
     })
     .catch(err => {
-      console.error(`[Hack.Diversity React Template] - caught error in 'createItem'`);
+      console.error(`caught error in 'createItem'`);
       Object.keys(err.errors).forEach(errorKey => {
-        console.error(`[Hack.Diversity React Template] ERROR for: ${errorKey}`);
+        console.error(`ERROR for: ${errorKey}`);
         console.error(
-          `[Hack.Diversity React Template] => ${
+          ` ${
             ((err.errors[errorKey] || {}).properties || {}).message
           }`,
         );
@@ -118,7 +118,7 @@ createItem = (req, res) => {
 updateItem = async (req, res) => {
   const body = req.body;
   if (!body) {
-    console.error(`[Hack.Diversity React Template] - 400 in 'updateItem': You must provide an item to update.`);
+    console.error(`400 in 'updateItem': You must provide an item to update.`);
     return res.status(400).json({
       success: false,
       error: 'You must provide an item to update.',
@@ -138,9 +138,9 @@ updateItem = async (req, res) => {
   // console.log(res);
 
   try {
-    await Item.findOneAndUpdate({ _id: req.params.id }, itemForUpdate);
+    await patientItem.findOneAndUpdate({ _id: req.params.id }, itemForUpdate);
   } catch (err) {
-    console.error(`[Hack.Diversity React Template] - caught error in 'updateItem': ${err}`);
+    console.error(`caught error in 'updateItem': ${err}`);
     console.error(err);
     return res.status(400).json({
       success: false,
@@ -148,7 +148,7 @@ updateItem = async (req, res) => {
     });
   }
 
-  console.log(`[Hack.Diversity React Template] - 200 in 'updateItem': Item updated!`);
+  console.log(`200 in 'updateItem': Item updated!`);
   return res.status(200).json({
     success: true,
     id: req.params.id,
@@ -157,9 +157,9 @@ updateItem = async (req, res) => {
 };
 
 deleteItem = async (req, res) => {
-  await Item.findOneAndDelete({ _id: req.params.id }, (err, item) => {
+  await patientItem.findOneAndDelete({ _id: req.params.id }, (err, item) => {
     if (err) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'deleteItem': ${err}`);
+      console.error(`400 in 'deleteItem': ${err}`);
       return res.status(400).json({
         succes: false,
         error: err,
@@ -167,7 +167,7 @@ deleteItem = async (req, res) => {
     }
 
     if (!item) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'deleteItem': Item not found!`);
+      console.error(`400 in 'deleteItem': Item not found!`);
       return res.status(400).json({
         success: false,
         error: 'Item not found!',
@@ -179,7 +179,7 @@ deleteItem = async (req, res) => {
       item: item,
     });
   }).catch(err => {
-    console.error(`[Hack.Diversity React Template] - caught error in 'deleteItem': ${err}`);
+    console.error(`caught error in 'deleteItem': ${err}`);
     console.error(err);
     return err;
   });
