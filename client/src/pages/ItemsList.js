@@ -93,30 +93,30 @@ class ItemsTable extends Component {
   //     });
   // };
 
-  // deleteSingleItem = itemId => {
-  //   return api
-  //     .deleteItemById(itemId)
-  //     .then(resp => {
-  //       console.log('deleteItemById: resp');
-  //       console.log(resp);
-  //       return resp;
-  //     })
-  //     .catch(err => {
-  //       console.error(`ERROR in 'deleteSingleItem': ${err}`);
-  //       console.error(err);
-  //       return err;
-  //     });
-  // };
+  deleteSingleItem = itemId => {
+    return api
+      .deleteItemById(itemId)
+      .then(resp => {
+        console.log('deleteItemById: resp');
+        console.log(resp);
+        return resp;
+      })
+      .catch(err => {
+        console.error(`ERROR in 'deleteSingleItem': ${err}`);
+        console.error(err);
+        return err;
+      });
+  };
 
-  // handleRemoveItem = data => {
-  //   const itemId = data;
+  handleRemoveItem = data => {
+    const itemId = data;
 
-  //   this.deleteSingleItem(itemId).then(resp => {
-  //     console.log('handleRemoveItem: resp');
-  //     console.log(resp);
-  //     this.fetchAllItems();
-  //   });
-  // };
+    this.deleteSingleItem(itemId).then(resp => {
+      console.log('handleRemoveItem: resp');
+      console.log(resp);
+      this.fetchAllItems();
+    });
+  };
 
   render() {
     const items = this.state.items || {};
@@ -207,32 +207,32 @@ class ItemsTable extends Component {
           const { original } = props.cell.row;
           return <span data-priority={original.zipcode}>{props.value}</span>;
         },
-      }
-      // {
-      //   Header: 'Update',
-      //   accessor: '_update',
-      //   Cell: props => {
-      //     const { original } = props.cell.row;
+      },
+      {
+        Header: 'Update',
+        accessor: '_update',
+        Cell: props => {
+          const { original } = props.cell.row;
 
-      //     return (
-      //       <Link data-update-id={original._id} to={`/item/update/${original._id}`}>
-      //         Update
-      //       </Link>
-      //     );
-      //   },
-      // },
-      // {
-      //   Header: 'Delete',
-      //   accessor: '_delete',
-      //   Cell: props => {
-      //     const { original } = props.cell.row;
-      //     return (
-      //       <span data-delete-id={original._id}>
-      //         <DeleteButton id={original._id} onDelete={this.handleRemoveItem} />
-      //       </span>
-      //     );
-      //   },
-      // },
+          return (
+            <Link data-update-id={original._id} to={`/item/update/${original._id}`}>
+              Update
+            </Link>
+          );
+        },
+      },
+      {
+        Header: 'Delete',
+        accessor: '_delete',
+        Cell: props => {
+          const { original } = props.cell.row;
+          return (
+            <span data-delete-id={original._id}>
+              <DeleteButton id={original._id} onDelete={this.handleRemoveItem} />
+            </span>
+          );
+        },
+      },
     ];
 
     return (

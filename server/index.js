@@ -28,6 +28,9 @@ app.get('/', (req, res) => {
 // app.use('/api', itemRouter);
 app.use('/api', itemRouter);
 
+app.listen(apiPort, () => {
+    console.log(`Server running on port ${apiPort}`);
+  
 // The order of routes are important
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
