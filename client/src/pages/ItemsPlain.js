@@ -88,25 +88,20 @@ class ItemsPlain extends Component {
   }
 
   fetchAllItems = () => {
-    const items = [1, 2, 3, 4, 5, 6]
-    this.setState({ items });
-  }
-  
-  // fetchAllItems = () => {
-  //   api
-  //     .getAllItems()
-  //     .then(resp => {
-  //       const { items } = resp.data;
-  //       console.log('getAllItems: resp');
-  //       console.log(items);
-  //       this.setState({ items });
-  //     })
-  //     .catch(err => {
-  //       console.error(`ERROR in 'getAllItems': ${err}`);
-  //       console.error(err);
-  //       return err;
-  //     });
-  // };
+    api
+      .getAllItems()
+      .then(resp => {
+        const { items } = resp.data;
+        console.log('getAllItems: resp');
+        console.log(items);
+        this.setState({ items });
+      })
+      .catch(err => {
+        console.error(`ERROR in 'getAllItems': ${err}`);
+        console.error(err);
+        return err;
+      });
+  };
 
   deleteSingleItem = itemId => {
     return api
@@ -142,16 +137,18 @@ class ItemsPlain extends Component {
         {(items || []).length > 0
           ? items.map(item => (
               <ItemContainer key={item._id}>
+
                 <ItemImage src={generateRandomCat()}></ItemImage>
-                <NameHeader>{item.name}</NameHeader>
-                <DetailParagraph>ID: {item._id}</DetailParagraph>
-                <DetailParagraph>Priority: {item.priority}</DetailParagraph>
+
+                <NameHeader>{item.PatientId}</NameHeader>
+                
                 <ButtonsWrapper>
                   <Link data-update-id={item._id} to={`/item/update/${item._id}`}>
                     Update Item
                   </Link>
                   <DeleteButton id={item._id} onDelete={this.handleRemoveItem} />
                 </ButtonsWrapper>
+
               </ItemContainer>
             ))
           : `No items to render... :(`}

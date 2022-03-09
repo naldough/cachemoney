@@ -4,20 +4,13 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Delete = styled.div.attrs({
-  className: 'delete-item-btn',
+  // className: 'delete-item-btn',
 })`
-  cursor: pointer;
-  background-color: tomato;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 12px;
-  margin: 4px 2px;
+  color: #ff0000;
   cursor: pointer;
 `;
+
+
 
 class DeleteButton extends Component {
   confirmDeleteItem = event => {
@@ -33,7 +26,7 @@ class DeleteButton extends Component {
   };
 
   render() {
-    return <Delete onClick={this.confirmDeleteItem}>Delete Item</Delete>;
+    return <Delete onClick={this.confirmDeleteItem}>Delete</Delete>;
   }
 }
 

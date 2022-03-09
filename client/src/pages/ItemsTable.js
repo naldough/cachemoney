@@ -1,18 +1,71 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import ReactTable from 'react-table-6';
+import { useTable } from 'react-table';
 import { DeleteButton } from '../components/buttons';
 import api from '../api';
 
+import MaUTable from '@material-ui/core/Table';
+import {CssBaseline, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+
 import styled from 'styled-components';
 
-import 'react-table-6/react-table.css';
 
 const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
+  @media screen and (max-width: 420px) {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
 `;
 
-class ItemsList extends Component {
+const Button = styled.button.attrs({
+  className: 'btn btn-primary',
+})`
+  margin: 15px 15px 15px 5px;
+`;
+
+const Table = ({ columns, data }) => {
+  const { getTableProps, headerGroups, rows, prepareRow } = useTable({
+    columns,
+    data,
+  }); 
+
+  return (
+   
+    <MaUTable {...getTableProps()}>
+      
+      <TableHead>
+        {headerGroups.map(headerGroup => (
+          <TableRow {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <TableCell {...column.getHeaderProps()}>
+                {column.render('Header')}
+              </TableCell>
+            ))}
+          </TableRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <TableRow data-row-item-patientId={row.values.patientId} {...row.getRowProps()}>
+              {row.cells.map(cell => {
+                return (
+                  <TableCell {...cell.getCellProps()}>
+                    {cell.render('Cell')}
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+          );
+        })}
+      </TableBody>
+    </MaUTable>
+  );
+};
+
+class ItemsTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,32 +76,27 @@ class ItemsList extends Component {
   componentDidMount() {
     console.log('ItemsList: props');
     console.log(this.props);
-    // if (((this.props.itemData || {}).items || []).length) return;
 
     this.fetchAllItems();
   }
 
-  fetchAllItems = () => {
-    const items = [1, 2, 3, 4, 5, 6]
-    this.setState({ items });
-  }
+  
 
-  // fetchAllItems = () => {
-  //   api
-  //     .getAllItems()
-  //     .then(resp => {
-  //       debugger;
-  //       const { items } = resp.data;
-  //       console.log('getAllItems: resp');
-  //       console.log(items);
-  //       this.setState({ items });
-  //     })
-  //     .catch(err => {
-  //       console.error(`ERROR in 'getAllItems': ${err}`);
-  //       console.error(err);
-  //       return err;
-  //     });
-  // };
+  fetchAllItems = () => {
+    api
+      .getAllItems()
+      .then(resp => {
+        const { items } = resp.data;
+        console.log('getAllItems: resp');
+        console.log(items);
+        this.setState({ items });
+      })
+      .catch(err => {
+        console.error(`ERROR in 'getAllItems': ${err}`);
+        console.error(err);
+        return err;
+      });
+  };
 
   deleteSingleItem = itemId => {
     return api
@@ -81,92 +129,108 @@ class ItemsList extends Component {
 
     const columns = [
       {
-        Header: 'ID',
-        accessor: '_id',
-        filterable: true,
+        Header: 'Patient ID',
+        accessor: 'patientId',
+        // filterable: true,
         Cell: props => {
-          return <span data-item-id={props.original._id}>{props.original._id}</span>;
+          console.log(props);
+          const { original } = props.cell.row;
+          return <span data-item-patientId={original.patientId}>{props.value}</span>;
         },
       },
       {
-        Header: 'Name',
-        accessor: 'name',
-        filterable: true,
+        Header: 'Exam ID',
+        accessor: 'examId',
         Cell: props => {
-          return <span data-name={props.original.name}>{props.value}</span>;
+          const { original } = props.cell.row;
+          return <span data-examId={original.examId}>{props.value}</span>;
         },
       },
       {
-        Header: 'Day(s)',
-        accessor: 'daysOfWeek',
-        filterable: true,
+        Header: 'Key Findings',
+        accessor: 'keyFindings',
         Cell: props => {
-          const { daysOfWeek } = props.original;
-          let daysToDisplay = '';
-          if (daysOfWeek && typeof daysOfWeek === 'object') {
-            for (const day in daysOfWeek) {
-              daysToDisplay =
-                daysToDisplay === '' ? daysOfWeek[day] : `${daysToDisplay}, ${daysOfWeek[day]}`;
-            }
-          }
-          return (
-            <span
-              data-daysofweek={daysOfWeek && JSON.stringify(daysOfWeek)}
-              data-daysofweek-by-id={props.original._id}>
-              {daysToDisplay || '-'}
-            </span>
-          );
+          const { original } = props.cell.row;
+          return <span data-keyFindings={original.keyFindings}>{props.value}</span>;
         },
       },
       {
-        Header: 'Timeframe',
-        accessor: 'timeframeNote',
+        Header: 'Brixia Score',
+        accessor: 'brixiaScore',
         Cell: props => {
-          return <span data-timeframe={props.original.timeframeNote}>{props.value || '-'}</span>;
+          const { original } = props.cell.row;
+          return <span data-brixiaScore={original.brixiaScore}>{props.value}</span>;
         },
       },
       {
-        Header: 'Priority',
-        accessor: 'priority',
-        filterable: true,
+        Header: 'Age',
+        accessor: 'age',
+        // filterable: true,
         Cell: props => {
-          return <span data-priority={props.original.priority}>{props.value}</span>;
+          const { original } = props.cell.row;
+          return <span data-age={original.age}>{props.value}</span>;
+        },
+      },
+      {
+        Header: 'Sex',
+        accessor: 'sex',
+        Cell: props => {
+          const { original } = props.cell.row;
+          return <span data-sex={original.sex}>{props.value}</span>;
+        },
+      },
+      {
+        Header: 'BMI',
+        accessor: 'bmi',
+        Cell: props => {
+          const { original } = props.cell.row;
+          return <span data-bmi={original.bmi}>{props.value}</span>;
+        },
+      },
+      {
+        Header: 'ZipCode',
+        accessor: 'zipCode',
+        Cell: props => {
+          const { original } = props.cell.row;
+          return <span data-zipCode={original.zipCode}>{props.value}</span>;
         },
       },
       {
         Header: '',
-        accessor: '',
+        accessor: 'update',
         Cell: props => {
+          const { original } = props.cell.row;
+
           return (
-            <Link data-update-id={props.original._id} to={`/item/update/${props.original._id}`}>
-              Update Item
-            </Link>
+            <button><Link data-update-id={original._id} to={`/item/update/${original._id}`}>
+              Update
+            </Link></button>
           );
         },
       },
+  
       {
         Header: '',
-        accessor: '',
+        accessor: 'Delete',
         Cell: props => {
+          const { original } = props.cell.row;
           return (
-            <span data-delete-id={props.original._id}>
-              <DeleteButton id={props.original._id} onDelete={this.handleRemoveItem} />
-            </span>
+            <button><span data-delete-id={original._id}>
+              <DeleteButton id={original._id} onDelete={this.handleRemoveItem} />
+            </span></button>
           );
         },
-      },
+      }
     ];
 
     return (
+       
       <Wrapper>
-        {(items || []).length > 0 ? ( // defeats the purpose of using `isLoading` prop?
-          <ReactTable
-            data={items}
-            columns={columns}
-            defaultPageSize={10}
-            showPageSizeOptions={true}
-            minRows={10}
-          />
+         <button><Link to={`/item/create`}>Create Exam</Link></button>
+         <br></br>
+         {/* <button>Search</button> */}
+        {(items || []).length > 0 ? (
+          <Table data={items} columns={columns} />
         ) : (
           `No items to render... :(`
         )}
@@ -175,4 +239,4 @@ class ItemsList extends Component {
   }
 }
 
-export default ItemsList;
+export default ItemsTable;

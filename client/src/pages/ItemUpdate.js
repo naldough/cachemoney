@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import api from '../api';
-import { shared } from '../constants';
-
 import styled from 'styled-components';
-
-const Title = styled.h1.attrs({
-  className: 'h1',
-})``;
 
 const Wrapper = styled.div.attrs({
   className: 'form-group',
 })`
-  margin-top: 0 30px;
+  background: #88CCF1;
+  font-family: 'Lato', sans-serif;
+  margin: 40px;
+  .box1 {
+    background: #f4f7f8;
+    float: left;
+    width: 50%;
+    padding-bottom: 10px;
+  }
+  .box2 {
+    background: #f4f7f8;
+    float: right;
+    width: 50%; 
+    padding-bottom: 10px;
+  }
 `;
 
 const Label = styled.label`
@@ -27,32 +35,16 @@ const InputText = styled.input.attrs({
   text-align: center;
 `;
 
-const Fieldset = styled.fieldset.attrs({
-  className: 'form-control',
-})`
-  border-color: transparent;
-  margin: 1em auto 0.5em;
-  max-width: 50%;
-  min-height: 6em;
-`;
-
-const DayInput = styled.input.attrs({
-  className: '',
-})`
-  margin: 5px auto;
-  text-align: center;
-`;
-
 const Button = styled.button.attrs({
   className: 'btn btn-primary',
 })`
-  margin: 15px 15px 15px 5px;
+  margin: 10px 10px 10px 5px;
 `;
 
 const CancelButton = styled.a.attrs({
   className: 'btn btn-danger',
 })`
-  margin: 15px 15px 15px 5px;
+  margin: 10px 10px 10px 5px;
 `;
 
 class ItemUpdate extends Component {
@@ -60,11 +52,16 @@ class ItemUpdate extends Component {
     super(props);
     this.state = {
       _id: '',
-      name: '',
-      daysOfWeek: {},
-      timeframeNote: '',
-      priority: 0,
-      content: '',
+      patientId: '',
+      age: '',
+      sex: '',
+      bmi: '',
+      zipCode: '',
+      examId: '',
+      imageUrl: '',
+      date: '',
+      keyFindings: '',
+      brixiaScore: ''
     };
   }
 
@@ -72,7 +69,7 @@ class ItemUpdate extends Component {
     const itemId = this.props.match.params.id;
     this.fetchSingleItem(itemId).then(resp => {
       const { item } = resp.data;
-      this.setState({ ...item });
+      this.setState({ ...item});
     });
   }
 
@@ -91,23 +88,57 @@ class ItemUpdate extends Component {
       });
   };
 
-  handleChangeInputName = async event => {
-    const name = event.target.value;
-    this.setState({ name });
+  
+  handleChangeInputPatientId = async event => {
+    const patientId = event.target.value;
+    this.setState({ patientId });
+  }; 
+  
+  handleChangeInputAge = async event => {
+    const age = event.target.value;
+    this.setState({ age });
   };
 
-  handleChangeDays = async event => {
-    const { checked } = event.target;
-    const { dayIndex } = event.target.dataset;
-    const { daysOfWeek } = this.state;
-    const { DAYS_OF_WEEK } = shared;
+  handleChangeInputSex = async event => {
+    const sex = event.target.value;
+    this.setState({ sex });
+  };
 
-    if (checked && !daysOfWeek[dayIndex]) {
-      daysOfWeek[dayIndex] = DAYS_OF_WEEK[dayIndex];
-    } else if (!checked && daysOfWeek[dayIndex]) {
-      delete daysOfWeek[dayIndex];
-    }
-    this.setState({ daysOfWeek: daysOfWeek });
+  handleChangeInputBmi = async event => {
+    const bmi = event.target.value;
+    this.setState({ bmi });
+  };
+
+  handleChangeInputZipCode = async event => {
+    const zipCode = event.target.value;
+    this.setState({ zipCode });
+  };
+
+  // Exam Info 
+
+  handleChangeInputExamId = async event => {
+    const examId = event.target.value;
+    this.setState({ examId });
+  };
+
+  handleChangeInputImageUrl = async event => {
+    const imageUrl = event.target.value;
+    this.setState({ imageUrl });
+  };
+  
+  handleChangeInputDate = async event => {
+    const date = event.target.value;
+    this.setState({ date });
+  };
+  
+  handleChangeInputKeyFindings = async event => {
+    const keyFindings= event.target.value;
+    this.setState({ keyFindings });
+  };
+
+  handleChangeInputBrixiaScore = async event => {
+    const brixiaScore = event.target.value;
+    this.setState({ brixiaScore });
   };
 
   updateSingleItem = item => {
@@ -129,25 +160,9 @@ class ItemUpdate extends Component {
       });
   };
 
-  handleChangeInputTimeframe = async event => {
-    const timeframeNote = event.target.value;
-    this.setState({ timeframeNote });
-  };
-
-  handleChangeInputPriority = async event => {
-    const priority = event.target.validity.valid ? event.target.value : this.state.priority;
-
-    this.setState({ priority });
-  };
-
-  handleChangeInputContent = async event => {
-    const content = event.target.value;
-    this.setState({ content });
-  };
-
   handleUpdateItem = event => {
-    const { _id, name, daysOfWeek, timeframeNote, priority, content } = this.state;
-    const item = { _id, name, daysOfWeek, timeframeNote, priority, content };
+    const { _id, patientId, age, sex, bmi, zipCode, examId, imageUrl, date, keyFindings, brixiaScore} = this.state;
+    const item = {_id, patientId, age, sex, bmi, zipCode, examId, imageUrl, date, keyFindings, brixiaScore};
 
     return this.updateSingleItem(item)
       .then(resp => {
@@ -174,60 +189,68 @@ class ItemUpdate extends Component {
   };
 
   render() {
-    const { _id, name, daysOfWeek, timeframeNote, priority, content } = this.state;
-
-    const { DAYS_OF_WEEK } = shared;
+    const { _id, patientId, age, sex, bmi, zipCode, examId, imageUrl, date, keyFindings, brixiaScore} = this.state;
 
     return (
+
       _id && (
         <Wrapper>
-          <Title>Create Item</Title>
+        <h4>Update Exam</h4>
+        <Button onClick={this.confirmUpdateItem}>Update</Button>
+        <CancelButton href={'/items'}>Cancel</CancelButton>
+        <br></br>
 
-          <Label>Name: </Label>
-          <InputText type="text" value={name} onChange={this.handleChangeInputName} />
+        <div className="box1">
+          <h4>Patient Info</h4>
 
-          <Fieldset>
-            <legend>Day(s) of the Week: </legend>
-            {Object.keys(DAYS_OF_WEEK).map((dayInt, i) => (
-              <React.Fragment key={DAYS_OF_WEEK[dayInt]}>
-                <DayInput
-                  type="checkbox"
-                  id={DAYS_OF_WEEK[dayInt]}
-                  className="day-checkbox-input"
-                  defaultValue={daysOfWeek[dayInt] && daysOfWeek[dayInt] !== ''}
-                  data-day-index={dayInt}
-                  onChange={this.handleChangeDays}
-                  defaultChecked={daysOfWeek[dayInt] && daysOfWeek[dayInt] !== ''}
-                />
-                <Label htmlFor={DAYS_OF_WEEK[dayInt]}>{DAYS_OF_WEEK[dayInt]}</Label>
-              </React.Fragment>
-            ))}
-          </Fieldset>
+          <Label>Ptient ID: </Label>
+          <InputText type="text" value={patientId} onChange={this.handleChangeInputPatientId} />
 
-          <Label>Timeframe Note: </Label>
-          <InputText type="text" value={timeframeNote} onChange={this.handleChangeInputTimeframe} />
+          <Label>Age: </Label>
+          <InputText type="text" value={age} onChange={this.handleChangeInputAge} />
 
-          <Label>Priority: </Label>
-          <InputText
-            type="number"
-            step="0.1"
-            lang="en-US"
-            min="0"
-            max="1000"
-            pattern="[0-9]+([,\.][0-9]+)?"
-            value={priority}
-            onChange={this.handleChangeInputPriority}
-          />
+          <Label>Sex: </Label>
+          {/* <select> options 
+              </select> */}
 
-          <Label>Content: </Label>
-          <InputText type="textarea" value={content} onChange={this.handleChangeInputContent} />
+          <InputText type="text" value={sex} onChange={this.handleChangeInputSex} />
 
-          <Button onClick={this.confirmUpdateItem}>Update Item</Button>
-          <CancelButton href={'/items'}>Cancel</CancelButton>
-        </Wrapper>
+          <Label>BMI: </Label>
+          <InputText type="text" value={bmi} onChange={this.handleChangeInputBmi} />
+
+          <Label>ZipCode: </Label>
+          <InputText type="text" value={zipCode} onChange={this.handleChangeInputZipCode} />
+
+        </div>
+
+        <div className="box2">
+          <h4>Exam Info</h4>
+
+          <Label>Exam ID: </Label>
+          <InputText type="text" value={examId} onChange={this.handleChangeInputExamId} />
+
+          <Label>Image URL: </Label>
+          <InputText type="text" value={imageUrl} onChange={this.handleChangeInputImageUrl} />
+
+          <Label>Date: </Label>
+          <InputText type="date" value={date} onChange={this.handleChangeInputDate} />
+
+          <label>Key Findings: </label>
+          <InputText value={keyFindings} onChange={this.handleChangeInputKeyFindings} />
+
+          <Label>Brixia Score: </Label>
+          <InputText type="text" value={brixiaScore} onChange={this.handleChangeInputBrixiaScore} />
+
+        </div>
+        
+      </Wrapper>
       )
     );
   }
 }
 
+
 export default ItemUpdate;
+
+
+

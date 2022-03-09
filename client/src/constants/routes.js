@@ -7,8 +7,10 @@ const LOG_IN = '/login';
 // Post routes
 const ITEMS = '/items';
 const ITEM = '/item/:id';
-const ITEM_INSERT = '/item/create';
+const ITEM_INSERT= '/item/create';
 const ITEM_UPDATE = '/item/update/:id';
+const ITEM_TABLE = '/item/table';
+const ITEM_PLAIN = '/item/plain/:id';
 
 export const routes = {
   HOME,
@@ -19,4 +21,7 @@ export const routes = {
   ITEM,
   ITEM_INSERT,
   ITEM_UPDATE,
+  ITEM_TABLE,
+  ITEM_PLAIN,
 };
+

@@ -13,20 +13,25 @@ import './styles/App.css';
 import { NavBar, Welcome } from './components';
 
 // Pages
-import { ItemInsert, Items, ItemUpdate } from './pages';
+import { ItemInsert, Items, ItemUpdate, ItemsTable } from './pages';
 
 class App extends Component {
   render() {
     // TODO: maybe only need one route for Items?
     const publicViews = (
       <Switch>
-        <Route exact path={routes.HOME} component={Welcome} >
-          {/* <Redirect to={routes.ITEMS} /> */}
+        <Route exact path={routes.HOME}>
+          <Redirect to={routes.ITEMS} />
         </Route>
+
         <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} />
+
+        <Route exact path={routes.HOME} component={Welcome} />
+
         <Route exact path={routes.ITEMS} component={Items} />
-        <Route exact path={`${routes.ITEMS}/items-plain`} component={Items} />
-        <Route exact path={`${routes.ITEMS}/react-table-v6`} component={Items} />
+
+        <Route exact path={routes.ITEM_TABLE} component={ItemsTable} />
+
         <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
       </Switch>
     );
@@ -37,7 +42,7 @@ class App extends Component {
         <NavBar />
         <div className="app--main">
           <div className="view-container">{publicViews}</div>
-        </div>
+          </div>
       </BrowserRouter>
     );
   }
