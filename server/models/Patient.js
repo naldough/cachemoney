@@ -1,33 +1,51 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Patient = new Schema(
+const Patient = new mongoose.Schema(
     {
-        patient_id: new Schema.Types.ObjectId,
-        
-        Age: {
-            type: Number,
-            required: true
+        // _id: new Schema.Types.ObjectId,
+
+        patientId: {
+            type: String,
         },
-        Sex: {
+        age: {
+            type: String,
+            // required: true
+        },
+        sex: {
+            type: String,
+            // required: true
+        },
+        bmi: {
+            type: Number,
+            // required: true
+        },
+        zipCode: {
+            type: String,
+            // required: true
+        },
+
+        // exam table 
+        
+        examId: {
             type: String,
             required: true
         },
-        BMI: {
-            type: Number,
-            required: true
-        },
-        Race: {
+        imageUrl: {
             type: String,
             required: true
         },
-        Zip_Code: {
-            type: Number,
-            required: true
-        
+        keyFindings: {
+            type: String,
+            // required: true
         },
+        brixiaScore: {
+            type: String,
+            // required: true
+        }
     },
-    {timestamps:true},
+
+    
 );
 
-module.exports = mongoose.model('Patient',Patient);
+module.exports = mongoose.model('Patients', Patient);

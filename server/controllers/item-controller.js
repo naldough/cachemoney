@@ -1,5 +1,6 @@
 /* eslint-disable no-undef, arrow-body-style */
-const Item = require('../models/item-model');
+const Item = require('../models/Patient');
+
 
 getItems = async (req, res) => {
   await Item.find({}, (err, items) => {
@@ -127,11 +128,16 @@ updateItem = async (req, res) => {
 
   const itemForUpdate = {
     _id: req.params.id,
-    name: body.name,
-    daysOfWeek: body.daysOfWeek,
-    timeframeNote: body.timeframeNote,
-    priority: body.priority,
-    content: body.content,
+    patientId: body.patientId,
+    age: body.age,
+    sex: body.sex,
+    bmi: body.bmi,
+    zipCode: body.zipcode,
+    examId: body.examId,
+    imageUrl: body.imageUrl,
+    date: body.date,
+    keyFindings: body.keyfindings,
+    brixiascore: body.brixiaScore
   };
 
   // console.log('----------------------- updateItem: res -----------------------');
