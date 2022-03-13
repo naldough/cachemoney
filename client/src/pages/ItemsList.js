@@ -117,7 +117,8 @@ class ItemsList extends Component {
         accessor: 'imageUrl',
         Cell: props => {
           const { original } = props.cell.row;
-          return <span data-imageUrl={original.imageUrl}>{props.value}</span>;
+          return <span data-imageUrl={original.imageUrl}><img src= {original.imageUrl} alt="display iamge" height="150" width="150" ></img></span>;
+  
         },
       },
       {
