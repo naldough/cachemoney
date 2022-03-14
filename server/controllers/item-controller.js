@@ -192,33 +192,29 @@ deleteItem = async (req, res) => {
 };
 
 viewItem = async (req, res) => {
-  await Item.findOneAndView({ _id: req.params.id }, (err, item) => {
-    if (err) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'viewItem': ${err}`);
-      return res.status(400).json({
-        succes: false,
-        error: err,
-      });
-    }
-
-    if (!item) {
-      console.error(`[Hack.Diversity React Template] - 400 in 'viewItem': Item not found!`);
-      return res.status(400).json({
-        success: false,
-        error: 'Item not found!',
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      item: item,
+  const body = req.body;
+  if (!body) {
+    console.error(`[Hack.Diversity React Template] - 400 in 'updateItem': You must provide an item to update.`);
+    return res.status(400).json({
+      success: false,
+      error: 'You must provide an item to update.',
     });
-  }).catch(err => {
-    console.error(`[Hack.Diversity React Template] - caught error in 'vieweItem': ${err}`);
-    console.error(err);
-    return err;
-  });
-};
+  }
+
+  const itemForUpdate = {
+    _id: req.params.id,
+    patientId: body.patientId,
+    age: body.age,
+    sex: body.sex,
+    bmi: body.bmi,
+    zipCode: body.zipcode,
+    examId: body.examId,
+    imageUrl: body.imageUrl,
+    date: body.date,
+    keyFindings: body.keyfindings,
+    brixiascore: body.brixiaScore
+  };
+}
 
 module.exports = {
   getItems,

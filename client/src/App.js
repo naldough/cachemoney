@@ -13,7 +13,7 @@ import './styles/App.css';
 import { NavBar, Welcome } from './components';
 
 // Pages
-import { ItemInsert, Items, ItemUpdate, ItemsTable } from './pages';
+import { ItemInsert, Items, ItemUpdate, ItemsTable} from './pages';
 
 class App extends Component {
   render() {
@@ -33,6 +33,7 @@ class App extends Component {
         <Route exact path={routes.ITEM_TABLE} component={ItemsTable} />
 
         <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
+
       </Switch>
     );
 
