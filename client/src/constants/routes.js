@@ -11,6 +11,7 @@ const ITEM_INSERT= '/item/create';
 const ITEM_UPDATE = '/item/update/:id';
 const ITEM_TABLE = '/item/table';
 const ITEM_PLAIN = '/item/plain/:id';
+const ITEM_VIEW = 'item/view/:id; '
 
 export const routes = {
   HOME,
@@ -23,5 +24,6 @@ export const routes = {
   ITEM_UPDATE,
   ITEM_TABLE,
   ITEM_PLAIN,
+  ITEM_VIEW,
 };
 

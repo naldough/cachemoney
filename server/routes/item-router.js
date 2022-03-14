@@ -9,5 +9,6 @@ router.get('/item/:id', ItemController.getItemById);
 router.post('/item', ItemController.createItem);
 router.put('/item/:id', ItemController.updateItem);
 router.delete('/item/:id', ItemController.deleteItem);
+//router.viewed('/item/:id', ItemController.viewItem);
 
 module.exports = router;

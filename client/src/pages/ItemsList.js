@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { useTable } from 'react-table';
 import { DeleteButton } from '../components/buttons';
+import { ViewButton } from '../components/buttons';
+
 import api from '../api';
 
 import MaUTable from '@material-ui/core/Table';
@@ -163,13 +165,18 @@ class ItemsList extends Component {
         },
       },
       {
-        Header: 'ZipCode',
-        accessor: 'zipCode',
-        Cell: props => {
-          const { original } = props.cell.row;
-          return <span data-zipCode={original.zipCode}>{props.value}</span>;
+          Header: '',
+          accessor: 'View',
+          Cell: props => {
+            const { original } = props.cell.row;
+  
+            return (
+              <button className='view-item-btn'><Link data-view-id={original._id} to={`/item/view/${original._id}`}>
+                View
+              </Link></button>
+            );
+          },
         },
-      },
 
       // {
       //   Header: '',
